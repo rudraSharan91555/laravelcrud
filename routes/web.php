@@ -1,21 +1,18 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-// use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductController;
-
-// Route to display the product creation form
-Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
-
-// Route to store the product
-// Route::post('/products', [ProductController::class, 'store'])->name('products.store');
-
-// Route to display the list of products (optional)
-// Route::get('/products', [ProductController::class, 'index'])->name('products.index');
-
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-// Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
+
+Route::controller(ProductController::class)->group(function(){
+    Route::get('/products','index')->name('products.index');
+    Route::get('/products/create','create')->name('products.create');
+    Route::post('/products','store')->name('products.store');
+    Route::get('/products/{product}/edit','edit')->name('products.edit');
+    Route::put('/products/{product}','update')->name('products.update');
+    Route::delete('/products/{product}','destroy')->name('products.destroy');    
+});
